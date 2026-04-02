@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shiva Somesh | Portfolio</title>
+  <meta name="description" content="Shiva Somesh - Computer Science Engineer. Portfolio with projects, skills, and contact." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #070b14;
+      --bg-soft: #0c1222;
+      --text: #e8eefc;
+      --muted: #9cb0d5;
+      --line: rgba(190, 214, 255, 0.16);
+      --accent: #7dd3fc;
+      --accent-2: #a78bfa;
+      --panel: rgba(255, 255, 255, 0.05);
+      --cursor-size: 20px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: radial-gradient(1200px 700px at 85% -10%, rgba(125, 211, 252, 0.10), transparent 55%),
+                  radial-gradient(1100px 650px at -10% 110%, rgba(167, 139, 250, 0.10), transparent 55%),
+                  var(--bg);
+      color: var(--text);
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      scroll-behavior: smooth;
+      cursor: none;
+    }
+
+    ::selection {
+      background: rgba(125, 211, 252, 0.35);
+      color: #ffffff;
+    }
+
+    .grain {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.12;
+      z-index: 1;
+      background-image: radial-gradient(rgba(255,255,255,0.08) 0.4px, transparent 0.4px);
+      background-size: 3px 3px;
+    }
+
+    .scene {
+      position: fixed;
+      inset: 0;
+      perspective: 1200px;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .orb {
+      position: absolute;
+      border-radius: 999px;
+      filter: blur(1px);
+      opacity: 0.45;
+      transform-style: preserve-3d;
+      animation: drift 14s ease-in-out infinite;
+    }
+
+    .orb.o1 { width: 340px; height: 340px; top: 9%; left: 10%; background: radial-gradient(circle at 30% 30%, rgba(125,211,252,0.55), rgba(125,211,252,0.08)); }
+    .orb.o2 { width: 440px; height: 440px; bottom: 3%; right: 5%; animation-delay: -4s; background: radial-gradient(circle at 30% 30%, rgba(167,139,250,0.45), rgba(167,139,250,0.08)); }
+    .orb.o3 { width: 220px; height: 220px; top: 56%; left: 50%; animation-delay: -8s; background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.25), rgba(125,211,252,0.05)); }
+
+    @keyframes drift {
+      0%,100% { transform: translate3d(0,0,0) rotate(0deg); }
+      50% { transform: translate3d(0,-26px,90px) rotate(8deg); }
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(12px);
+      background: rgba(7, 11, 20, 0.62);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .topbar-inner {
+      min-height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .brand {
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+    }
+
+    nav {
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    nav a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.85rem;
+      transition: color .2s ease;
+    }
+
+    nav a:hover { color: var(--text); }
+
+    .hero {
+      min-height: calc(100vh - 72px);
+      display: grid;
+      align-items: center;
+      padding: 42px 0 50px;
+    }
+
+    .kicker {
+      color: var(--accent);
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      font-size: .72rem;
+      margin-bottom: 14px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2.2rem, 8vw, 6rem);
+      line-height: .92;
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      letter-spacing: .01em;
+      text-wrap: balance;
+    }
+
+    .sub {
+      margin-top: 18px;
+      font-size: clamp(1rem, 2.2vw, 1.25rem);
+      color: var(--muted);
+      max-width: 760px;
+      line-height: 1.65;
+    }
+
+    .hero-links {
+      margin-top: 26px;
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 16px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      text-decoration: none;
+      color: var(--text);
+      background: rgba(255,255,255,0.02);
+      transition: transform .25s ease, border-color .25s ease, background .25s ease;
+      font-size: .88rem;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      border-color: rgba(125, 211, 252, 0.5);
+      background: rgba(125, 211, 252, 0.12);
+    }
+
+    section { padding: 78px 0; }
+
+    .section-title {
+      margin: 0 0 20px;
+      font-size: .78rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .panel {
+      background: linear-gradient(145deg, rgba(255,255,255,0.06), rgba(255,255,255,0.025));
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      backdrop-filter: blur(10px);
+      transform-style: preserve-3d;
+      transition: transform .25s ease, border-color .25s ease;
+      will-change: transform;
+    }
+
+    .panel:hover { border-color: rgba(125, 211, 252, 0.5); }
+
+    .about-panel {
+      padding: 28px;
+      color: var(--muted);
+      line-height: 1.7;
+      font-size: 1rem;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .card {
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      min-height: 220px;
+    }
+
+    .card h3 { margin: 0; font-size: 1.05rem; }
+    .card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.55;
+      font-size: .92rem;
+      flex: 1;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .tag {
+      border: 1px solid rgba(125, 211, 252, 0.32);
+      padding: 6px 10px;
+      border-radius: 999px;
+      color: #c9ebff;
+      font-size: .75rem;
+      background: rgba(125, 211, 252, 0.08);
+    }
+
+    .edu {
+      padding: 24px;
+      display: grid;
+      gap: 8px;
+    }
+
+    .muted { color: var(--muted); }
+
+    .skills {
+      padding: 24px;
+      display: grid;
+      gap: 12px;
+    }
+
+    .skills strong {
+      font-size: .9rem;
+      color: #d4e4ff;
+      letter-spacing: .03em;
+    }
+
+    footer {
+      border-top: 1px solid var(--line);
+      padding: 30px 0 48px;
+      color: var(--muted);
+      font-size: .82rem;
+      text-align: center;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity .7s ease, transform .7s ease;
+    }
+
+    .reveal.in {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .cursor,
+    .cursor-ring {
+      position: fixed;
+      left: 0;
+      top: 0;
+      pointer-events: none;
+      border-radius: 50%;
+      z-index: 100;
+      transform: translate3d(-999px, -999px, 0);
+      mix-blend-mode: screen;
+    }
+
+    .cursor {
+      width: 8px;
+      height: 8px;
+      background: #c6ecff;
+    }
+
+    .cursor-ring {
+      width: var(--cursor-size);
+      height: var(--cursor-size);
+      border: 1px solid rgba(198, 236, 255, 0.7);
+      box-shadow: 0 0 18px rgba(125, 211, 252, 0.45);
+      transition: width .18s ease, height .18s ease, border-color .18s ease;
+    }
+
+    @media (max-width: 860px) {
+      html, body { cursor: auto; }
+      .cursor, .cursor-ring { display: none; }
+      .grid-2 { grid-template-columns: 1fr; }
+      .hero { min-height: auto; padding-top: 54px; }
+      nav { display: none; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+      .cursor, .cursor-ring { display: none; }
+      html, body { cursor: auto; }
+    }
+  </style>
+</head>
+<body>
+  <div class="scene" aria-hidden="true">
+    <div class="orb o1"></div>
+    <div class="orb o2"></div>
+    <div class="orb o3"></div>
+  </div>
+  <div class="grain" aria-hidden="true"></div>
+  <div class="cursor" aria-hidden="true"></div>
+  <div class="cursor-ring" aria-hidden="true"></div>
+
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <div class="brand">Shiva Somesh</div>
+      <nav>
+        <a href="#about">About</a>
+        <a href="#projects">Projects</a>
+        <a href="#skills">Skills</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container reveal">
+        <p class="kicker">Computer Science Engineer · VIT</p>
+        <h1>Minimal signal. Strong execution.</h1>
+        <p class="sub">
+          I’m <strong>Shiva Somesh</strong>, a Computer Science Engineering student focused on AI, computer vision,
+          and full-stack systems. I build practical products from model design to real-time deployment.
+        </p>
+        <div class="hero-links">
+          <a class="btn" href="mailto:shivasomesh100@gmail.com">shivasomesh100@gmail.com</a>
+          <a class="btn" href="https://github.com/Shivasomesh-cpu" target="_blank" rel="noreferrer">GitHub</a>
+          <a class="btn" href="https://in.linkedin.com/in/shiva-somesh-66488631b" target="_blank" rel="noreferrer">LinkedIn</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="container">
+        <h2 class="section-title reveal">Education</h2>
+        <article class="panel edu reveal" data-tilt>
+          <strong>Vellore Institute of Technology (VIT)</strong>
+          <span class="muted">B.Tech in Computer Science and Engineering · June 2028</span>
+          <span class="muted">Coursework: Data Structures & Algorithms, Systems Programming, Networks, DBMS, Computer Architecture, Machine Learning, Artificial Intelligence, Operating Systems.</span>
+        </article>
+      </div>
+    </section>
+
+    <section id="projects">
+      <div class="container">
+        <h2 class="section-title reveal">Selected Projects</h2>
+        <div class="grid-2">
+          <article class="panel card reveal" data-tilt>
+            <h3>Real-Time Object & Animal Recognition</h3>
+            <p>
+              CNN + TensorFlow pipeline with <strong>83.4% classification accuracy</strong>, plus YOLO (Ultralytics)
+              and OpenCV for low-latency live multi-object detection. Improved robustness for blurred/noisy frames.
+            </p>
+            <div class="tags">
+              <span class="tag">Python</span><span class="tag">TensorFlow</span><span class="tag">YOLO</span><span class="tag">OpenCV</span>
+            </div>
+          </article>
+
+          <article class="panel card reveal" data-tilt>
+            <h3>Skin Cancer Early Detection System</h3>
+            <p>
+              End-to-end AI healthcare app with CNN-based inference, Flask deployment, image preprocessing,
+              and web UI for uploads and prediction output rendering.
+            </p>
+            <div class="tags">
+              <span class="tag">Flask</span><span class="tag">TensorFlow</span><span class="tag">JavaScript</span><span class="tag">HTML/CSS</span>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills">
+      <div class="container">
+        <h2 class="section-title reveal">Skills & Interests</h2>
+        <article class="panel skills reveal" data-tilt>
+          <div><strong>Languages</strong> <span class="muted">Python, C++, Java, C, C#, SQL, HTML/CSS, JavaScript, R, Verilog, Assembly (8051, 8086)</span></div>
+          <div><strong>Technologies</strong> <span class="muted">Git, GitHub, Visual Studio, Flask, Pandas, Matplotlib, NumPy, Scikit-learn, TailwindCSS, Bootstrap, Supabase, Postman, PyTorch, YOLO, OpenCV</span></div>
+          <div><strong>Concepts</strong> <span class="muted">Machine Learning, Systems, Backend, Full Stack Development, Data Science, AI, Computer Vision, Healthcare AI, Real-Time Systems</span></div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer id="contact">
+    <div class="container reveal">
+      <p>Shiva Somesh · shivasomesh100@gmail.com</p>
+      <p>
+        <a class="muted" href="https://github.com/Shivasomesh-cpu" target="_blank" rel="noreferrer">GitHub</a>
+        ·
+        <a class="muted" href="https://in.linkedin.com/in/shiva-somesh-66488631b" target="_blank" rel="noreferrer">LinkedIn</a>
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    const revealNodes = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) {
+          e.target.classList.add('in');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    revealNodes.forEach((n) => io.observe(n));
+
+    const cursor = document.querySelector('.cursor');
+    const ring = document.querySelector('.cursor-ring');
+    const isFinePointer = window.matchMedia('(pointer: fine)').matches;
+
+    if (isFinePointer && cursor && ring) {
+      let x = window.innerWidth / 2;
+      let y = window.innerHeight / 2;
+      let rx = x;
+      let ry = y;
+
+      window.addEventListener('mousemove', (e) => {
+        x = e.clientX;
+        y = e.clientY;
+        cursor.style.transform = `translate3d(${x - 4}px, ${y - 4}px, 0)`;
+      }, { passive: true });
+
+      const animateRing = () => {
+        rx += (x - rx) * 0.15;
+        ry += (y - ry) * 0.15;
+        ring.style.transform = `translate3d(${rx - ring.offsetWidth / 2}px, ${ry - ring.offsetHeight / 2}px, 0)`;
+        requestAnimationFrame(animateRing);
+      };
+      animateRing();
+
+      document.querySelectorAll('a, .panel').forEach((el) => {
+        el.addEventListener('mouseenter', () => {
+          ring.style.width = '34px';
+          ring.style.height = '34px';
+          ring.style.borderColor = 'rgba(167,139,250,0.9)';
+        });
+        el.addEventListener('mouseleave', () => {
+          ring.style.width = '20px';
+          ring.style.height = '20px';
+          ring.style.borderColor = 'rgba(198,236,255,0.7)';
+        });
+      });
+    }
+
+    const tiltCards = document.querySelectorAll('[data-tilt]');
+    tiltCards.forEach((card) => {
+      card.addEventListener('mousemove', (e) => {
+        const r = card.getBoundingClientRect();
+        const px = (e.clientX - r.left) / r.width;
+        const py = (e.clientY - r.top) / r.height;
+        const rx = (0.5 - py) * 7;
+        const ry = (px - 0.5) * 9;
+        card.style.transform = `rotateX(${rx}deg) rotateY(${ry}deg) translateZ(0)`;
+      });
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = 'rotateX(0deg) rotateY(0deg)';
+      });
+    });
+  </script>
+</body>
+</html>
