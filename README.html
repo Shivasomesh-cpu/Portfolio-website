@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shiva Somesh — Portfolio</title>
+<style>
+  :root {
+    --bg: #050516;
+    --bg-card: #0a0a1f;
+    --fg: #d2e0ff;
+    --muted: #6b7a99;
+    --neon-cyan: #00ffff;
+    --neon-magenta: #ff00ff;
+    --neon-violet: #8800ff;
+    --neon-green: #00ff88;
+    --border: rgba(255, 255, 255, 0.08);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, sans-serif;
+    background: var(--bg);
+    color: var(--fg);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ─── HERO ─── */
+  .hero {
+    position: relative;
+    min-height: 70vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    overflow: hidden;
+    padding: 4rem 1.5rem;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 30% 30%, rgba(0,255,255,0.12), transparent 60%),
+      radial-gradient(ellipse 60% 50% at 70% 70%, rgba(255,0,255,0.12), transparent 60%);
+    z-index: 0;
+  }
+  .hero-content { position: relative; z-index: 1; max-width: 900px; }
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.4rem 1rem;
+    border-radius: 999px;
+    background: rgba(0, 255, 255, 0.08);
+    border: 1px solid rgba(0, 255, 255, 0.25);
+    font-size: 0.75rem;
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--neon-cyan);
+    margin-bottom: 2rem;
+  }
+  .badge::before {
+    content: '';
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--neon-green);
+    box-shadow: 0 0 8px var(--neon-green);
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse { 50% { opacity: 0.5; } }
+
+  .hero h1 {
+    font-size: clamp(3rem, 8vw, 6rem);
+    font-weight: 800;
+    line-height: 0.9;
+    letter-spacing: -0.04em;
+    margin-bottom: 1.5rem;
+  }
+  .gradient {
+    background: linear-gradient(135deg, var(--neon-cyan), var(--neon-magenta) 50%, var(--neon-violet));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 60px rgba(0, 255, 255, 0.3);
+  }
+  .hero p {
+    font-size: 1.2rem;
+    color: var(--muted);
+    max-width: 600px;
+    margin: 0 auto 2rem;
+  }
+  .hero-cta {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 999px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--neon-cyan), var(--neon-magenta));
+    color: #000;
+    box-shadow: 0 0 30px rgba(0, 255, 255, 0.3);
+  }
+  .btn-primary:hover { transform: scale(1.05); box-shadow: 0 0 50px rgba(0, 255, 255, 0.5); }
+  .btn-ghost {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--border);
+    color: var(--fg);
+  }
+  .btn-ghost:hover { border-color: var(--neon-cyan); background: rgba(0, 255, 255, 0.05); }
+
+  /* ─── SECTION ─── */
+  .section {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 5rem 1.5rem;
+  }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 3rem;
+  }
+  .section-num {
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    font-size: 0.85rem;
+    color: var(--neon-cyan);
+  }
+  .section-line {
+    flex: 0 0 48px;
+    height: 1px;
+    background: var(--neon-cyan);
+  }
+  .section-label {
+    font-size: 0.75rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .section h2 {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    margin-bottom: 0.75rem;
+  }
+  .section-desc {
+    color: var(--muted);
+    font-size: 1.05rem;
+    max-width: 650px;
+  }
+
+  /* ─── FEATURE GRID ─── */
+  .features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.25rem;
+    margin-bottom: 4rem;
+  }
+  .feature {
+    padding: 1.75rem;
+    border-radius: 1rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    transition: border-color 0.3s, transform 0.3s;
+  }
+  .feature:hover {
+    border-color: rgba(0, 255, 255, 0.3);
+    transform: translateY(-4px);
+  }
+  .feature-icon {
+    font-size: 1.5rem;
+    margin-bottom: 0.75rem;
+  }
+  .feature h3 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin-bottom: 0.4rem;
+  }
+  .feature p {
+    font-size: 0.85rem;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  /* ─── SCREENSHOT GALLERY ─── */
+  .gallery {
+    display: grid;
+    gap: 2rem;
+  }
+  .screenshot {
+    position: relative;
+    border-radius: 1rem;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    background: var(--bg-card);
+    transition: border-color 0.3s;
+  }
+  .screenshot:hover { border-color: rgba(0, 255, 255, 0.25); }
+  .screenshot img {
+    width: 100%;
+    display: block;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .screenshot:hover img { transform: scale(1.02); }
+  .screenshot-caption {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    padding: 1.5rem 1.5rem 1rem;
+    background: linear-gradient(to top, rgba(5,5,22,0.95), transparent);
+  }
+  .screenshot-caption h4 {
+    font-size: 0.95rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+  }
+  .screenshot-caption p {
+    font-size: 0.8rem;
+    color: var(--muted);
+  }
+
+  .gallery-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+    gap: 1.5rem;
+  }
+  .gallery-row .screenshot { border-radius: 0.75rem; }
+
+  /* ─── TECH STACK ─── */
+  .tech-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-top: 1.5rem;
+  }
+  .tech-tag {
+    padding: 0.4rem 0.9rem;
+    border-radius: 0.5rem;
+    font-size: 0.8rem;
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    background: rgba(0, 255, 255, 0.05);
+    border: 1px solid rgba(0, 255, 255, 0.15);
+    color: var(--neon-cyan);
+  }
+
+  /* ─── STATS ─── */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 1rem;
+    margin-bottom: 4rem;
+  }
+  .stat {
+    text-align: center;
+    padding: 1.5rem 1rem;
+    border-radius: 0.75rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+  }
+  .stat-value {
+    font-size: 2rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--neon-cyan), var(--neon-magenta));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .stat-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 0.25rem;
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    text-align: center;
+    padding: 3rem 1.5rem;
+    border-top: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 0.85rem;
+  }
+  footer a { color: var(--neon-cyan); text-decoration: none; }
+
+  @media (max-width: 640px) {
+    .hero { min-height: 60vh; padding: 3rem 1rem; }
+    .section { padding: 3rem 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════ HERO ═══════════════════ -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="badge">Portfolio · 2026</div>
+    <h1>
+      Shiva<br>
+      <span class="gradient">Somesh</span>
+    </h1>
+    <p>Distributed Systems Engineer — an immersive, Three.js-powered portfolio built with Next.js 16, React 19, custom GLSL shaders, Rapier physics, and a neon aesthetic inspired by Noomo and Bitfalk.</p>
+    <div class="hero-cta">
+      <a class="btn btn-primary" href="https://github.com/Shivasomesh-cpu/Portfolio-website">View on GitHub</a>
+      <a class="btn btn-ghost" href="#gallery">See Screenshots</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ STATS ═══════════════════ -->
+<section class="section" style="padding-top: 2rem;">
+  <div class="stats">
+    <div class="stat">
+      <div class="stat-value">8+</div>
+      <div class="stat-label">Projects</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">3</div>
+      <div class="stat-label">3D Libraries</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">3</div>
+      <div class="stat-label">Cursor Layers</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">500vh</div>
+      <div class="stat-label">Scroll Hero</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">10</div>
+      <div class="stat-label">Physics Bodies</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ FEATURES ═══════════════════ -->
+<section class="section">
+  <div class="section-header">
+    <span class="section-num">01</span>
+    <span class="section-line"></span>
+    <span class="section-label">Features</span>
+  </div>
+  <h2>Built like a top-tier agency site.</h2>
+  <p class="section-desc">Every interaction is engineered — from the custom physics simulation to the three-layer cursor with scroll-progress ring.</p>
+
+  <div class="features">
+    <div class="feature">
+      <div class="feature-icon">🌀</div>
+      <h3>Three.js Hero Scene</h3>
+      <p>Multi-layer wireframe orb (cyan + magenta + violet + green) with 2,000-particle colored starfield, floating geometric accents, and mouse-parallax camera with scroll-driven dolly.</p>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">🎯</div>
+      <h3>3-Layer Fluid Cursor</h3>
+      <p>Solid dot + spring-damped ring (mix-blend-mode: difference for negative inversion) + electric-blue scroll-progress SVG ring that fills as you scroll.</p>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">⚡</div>
+      <h3>Custom Physics Engine</h3>
+      <p>10 neon marbles tumbling under real gravity with sphere-sphere collision detection, wall bounces, and friction — pure Three.js, no WASM dependency.</p>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">🎬</div>
+      <h3>Cinematic Loading Screen</h3>
+      <p>0–100% counter in massive 20vw type with a self-drawing "SS" logo (two circles + animated bar + letter reveals). Exits with a curtain wipe.</p>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">⌘</div>
+      <h3>Command Palette (⌘K)</h3>
+      <p>Fuzzy-search all sections, projects, and external links. Full keyboard navigation with arrow keys + Enter.</p>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">🌊</div>
+      <h3>Lenis Smooth Scroll</h3>
+      <p>Buttery inertia scrolling synced with GSAP ScrollTrigger. 500vh sticky-scroll hero where the 3D camera dollies in as you scroll.</p>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">🎨</div>
+      <h3>Neon Palette</h3>
+      <p>Cyan, magenta, violet, green, amber on deep blue-black (#050516). Every project card has its own unique neon gradient accent.</p>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">🔊</div>
+      <h3>Web Audio Toggle</h3>
+      <p>Optional hover/click sounds generated via Web Audio API oscillators — no audio files needed. Opt-in only.</p>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">📱</div>
+      <h3>Fully Responsive</h3>
+      <p>Mobile drawer menu, adaptive layouts, touch-device fallbacks (native cursor restored on coarse pointers).</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ SCREENSHOTS ═══════════════════ -->
+<section class="section" id="gallery">
+  <div class="section-header">
+    <span class="section-num">02</span>
+    <span class="section-line"></span>
+    <span class="section-label">Gallery</span>
+  </div>
+  <h2>The portfolio in motion.</h2>
+  <p class="section-desc">Screenshots from the final build — hero, loader, sections, cursor, physics, and mobile.</p>
+
+  <div class="gallery">
+
+    <!-- Hero -->
+    <div class="screenshot">
+      <img src="download/v7-fresh-hero.png" alt="Hero section with neon 3D orb and large typography">
+      <div class="screenshot-caption">
+        <h4>Hero — Neon 3D Wireframe Orb</h4>
+        <p>Massive typography over a multi-color wireframe icosahedron with 2,000-particle starfield and floating geometric accents.</p>
+      </div>
+    </div>
+
+    <!-- Loader -->
+    <div class="gallery-row">
+      <div class="screenshot">
+        <img src="download/v6-loader.png" alt="Loading screen with 0-100% counter and self-drawing SS logo">
+        <div class="screenshot-caption">
+          <h4>Loading Screen</h4>
+          <p>0→100% counter with self-drawing "SS" logo.</p>
+        </div>
+      </div>
+      <div class="screenshot">
+        <img src="download/v2-404.png" alt="Custom 404 page with neon gradient">
+        <div class="screenshot-caption">
+          <h4>Custom 404</h4>
+          <p>Themed error page with neon gradient text.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- About + Skills -->
+    <div class="gallery-row">
+      <div class="screenshot">
+        <img src="download/v2-about.png" alt="About section with bio and coursework">
+        <div class="screenshot-caption">
+          <h4>About</h4>
+          <p>Bio, quick facts, and coursework chip cloud.</p>
+        </div>
+      </div>
+      <div class="screenshot">
+        <img src="download/v2-skills.png" alt="Skills section with 6 categorized cards">
+        <div class="screenshot-caption">
+          <h4>Skills</h4>
+          <p>6 capability cards with hover glow.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Projects -->
+    <div class="screenshot">
+      <img src="download/v2-projects.png" alt="Projects section with 8 project cards">
+      <div class="screenshot-caption">
+        <h4>Selected Work — 8 Projects</h4>
+        <p>3D-tilt cards with neon gradient accents. Click any card to open a detail modal.</p>
+      </div>
+    </div>
+
+    <!-- Project Modal -->
+    <div class="gallery-row">
+      <div class="screenshot">
+        <img src="download/portfolio-modal-test.png" alt="Project detail modal">
+        <div class="screenshot-caption">
+          <h4>Project Modal</h4>
+          <p>Description, highlights, stack tags, and metrics.</p>
+        </div>
+      </div>
+      <div class="screenshot">
+        <img src="download/v2-command-palette.png" alt="Command palette open">
+        <div class="screenshot-caption">
+          <h4>Command Palette (⌘K)</h4>
+          <p>Fuzzy search across all sections and projects.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Physics Playground -->
+    <div class="screenshot">
+      <img src="download/v7-fresh-playground.png" alt="Physics playground with neon marbles tumbling">
+      <div class="screenshot-caption">
+        <h4>Physics Playground — Live Simulation</h4>
+        <p>10 neon marbles (octahedrons, tetrahedrons, boxes, toruses) tumbling under real gravity with sphere-sphere collisions. Pure Three.js, no WASM.</p>
+      </div>
+    </div>
+
+    <!-- Contact -->
+    <div class="screenshot">
+      <img src="download/v2-contact.png" alt="Contact section with form and social links">
+      <div class="screenshot-caption">
+        <h4>Contact</h4>
+        <p>Two-column layout with social links and mailto-powered form.</p>
+      </div>
+    </div>
+
+    <!-- Cursor close-ups -->
+    <div class="gallery-row">
+      <div class="screenshot">
+        <img src="download/v5-cursor-visible.png" alt="Custom cursor idle state">
+        <div class="screenshot-caption">
+          <h4>Cursor — Idle</h4>
+          <p>Cyan dot + ring with mix-blend difference.</p>
+        </div>
+      </div>
+      <div class="screenshot">
+        <img src="download/v5-cursor-hover-final.png" alt="Custom cursor hover state">
+        <div class="screenshot-caption">
+          <h4>Cursor — Hover</h4>
+          <p>Ring expands to 60px on interactive elements.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile -->
+    <div class="gallery-row">
+      <div class="screenshot">
+        <img src="download/v3-mobile-hero.png" alt="Mobile hero responsive view">
+        <div class="screenshot-caption">
+          <h4>Mobile Hero</h4>
+          <p>Responsive at 390px — no overflow.</p>
+        </div>
+      </div>
+      <div class="screenshot">
+        <img src="download/v6-mobile.png" alt="Mobile navigation drawer">
+        <div class="screenshot-caption">
+          <h4>Mobile Drawer</h4>
+          <p>Slide-in nav with smooth spring animation.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════ TECH STACK ═══════════════════ -->
+<section class="section">
+  <div class="section-header">
+    <span class="section-num">03</span>
+    <span class="section-line"></span>
+    <span class="section-label">Tech Stack</span>
+  </div>
+  <h2>The full toolkit.</h2>
+  <p class="section-desc">Every library chosen for a reason — from the 3D engine to the smooth scroll.</p>
+
+  <div class="tech-grid">
+    <span class="tech-tag">Next.js 16</span>
+    <span class="tech-tag">React 19</span>
+    <span class="tech-tag">TypeScript 5</span>
+    <span class="tech-tag">Tailwind CSS 4</span>
+    <span class="tech-tag">Three.js</span>
+    <span class="tech-tag">@react-three/fiber</span>
+    <span class="tech-tag">@react-three/drei</span>
+    <span class="tech-tag">@react-three/postprocessing</span>
+    <span class="tech-tag">Framer Motion</span>
+    <span class="tech-tag">Lenis</span>
+    <span class="tech-tag">GSAP</span>
+    <span class="tech-tag">maath</span>
+    <span class="tech-tag">Space Grotesk</span>
+    <span class="tech-tag">JetBrains Mono</span>
+  </div>
+</section>
+
+<!-- ═══════════════════ SETUP ═══════════════════ -->
+<section class="section">
+  <div class="section-header">
+    <span class="section-num">04</span>
+    <span class="section-line"></span>
+    <span class="section-label">Setup</span>
+  </div>
+  <h2>Run it locally.</h2>
+  <p class="section-desc">Three commands. That's it.</p>
+
+  <div class="feature" style="margin-top: 1.5rem; font-family: 'SF Mono', 'Fira Code', monospace; font-size: 0.85rem; line-height: 1.8;">
+    <div><span style="color: var(--muted);"># Clone the repo</span></div>
+    <div><span style="color: var(--neon-green);">git clone</span> https://github.com/Shivasomesh-cpu/Portfolio-website.git</div>
+    <div><span style="color: var(--neon-green);">cd</span> Portfolio-website</div>
+    <br>
+    <div><span style="color: var(--muted);"># Install dependencies</span></div>
+    <div><span style="color: var(--neon-green);">npm install</span></div>
+    <br>
+    <div><span style="color: var(--muted);"># Start the dev server</span></div>
+    <div><span style="color: var(--neon-green);">npm run dev</span></div>
+    <br>
+    <div><span style="color: var(--muted);"># Open http://localhost:3000</span></div>
+  </div>
+</section>
+
+<!-- ═══════════════════ FOOTER ═══════════════════ -->
+<footer>
+  <p>Built by <a href="https://github.com/Shivasomesh-cpu">Shiva Somesh</a> · Distributed Systems Engineer · Bengaluru / Chennai</p>
+  <p style="margin-top: 0.5rem; font-size: 0.75rem;">Next.js 16 + Three.js + Rapier + GSAP + Lenis · Neon palette · 2026</p>
+</footer>
+
+</body>
+</html>
